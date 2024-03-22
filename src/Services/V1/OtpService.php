@@ -4,6 +4,7 @@ namespace Callmeaf\Otp\Services\V1;
 
 use Callmeaf\Base\Services\V1\BaseService;
 use Callmeaf\Otp\Services\V1\Contracts\OtpServiceInterface;
+use Callmeaf\Sms\Services\V1\SmsService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -18,5 +19,44 @@ class OtpService extends BaseService implements OtpServiceInterface
         $this->resourceCollection = config('callmeaf-otp.model_resource_collection');
         $this->defaultData = config('callmeaf-otp.default_values');
         $this->defaultData['expired_at'] = now()->addSeconds(config('callmeaf-otp.lifetime'));
+    }
+
+    public function smsChannel(): SmsService
+    {
+        return app(config('callmeaf-otp.sms_channel'));
+    }
+
+    public function sendNewOtp(string $mobile): OtpService
+    {
+        $code = $this->newCode();
+        $this->updateOrCreate([
+            'mobile' => $mobile
+        ],[
+            'mobile' => $mobile,
+            'code' => $code,
+        ]);
+        $smsChannel = $this->smsChannel();
+        $smsChannel->sendViaPattern(
+            pattern: $smsChannel->verifyOtpPattern(),
+            mobile: $mobile,
+            values: [
+                $code,
+            ],
+        );
+        return $this;
+    }
+
+    public function newCode(): string
+    {
+        $code = randomDigits($this->codeLength());
+        if($this->freshQuery()->where('code',$code)->exists()) {
+            return $this->newCode();
+        }
+        return $code;
+    }
+
+    private function codeLength(): int
+    {
+        return config('callmeaf-otp.code_length');
     }
 }
