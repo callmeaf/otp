@@ -21,6 +21,7 @@ class Otp extends Model implements HasEnum
         'type',
         'code',
         'mobile',
+        'expired_at'
     ];
 
     protected $casts = [

@@ -11,4 +11,5 @@ interface OtpServiceInterface extends BaseServiceInterface
     public function smsChannel(): SmsService;
     public function sendNewOtp(string $mobile): OtpService;
     public function newCode(): string;
+    public function verifyCode(string $mobile,string $code): bool;
 }

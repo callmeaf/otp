@@ -3,6 +3,8 @@
 namespace Callmeaf\Otp\Services\V1;
 
 use Callmeaf\Base\Services\V1\BaseService;
+use Callmeaf\Otp\Exceptions\OtpExpiredException;
+use Callmeaf\Otp\Exceptions\WaitForNewOtpException;
 use Callmeaf\Otp\Services\V1\Contracts\OtpServiceInterface;
 use Callmeaf\Sms\Services\V1\SmsService;
 use Illuminate\Database\Eloquent\Builder;
@@ -18,7 +20,7 @@ class OtpService extends BaseService implements OtpServiceInterface
         $this->resource = config('callmeaf-otp.model_resource');
         $this->resourceCollection = config('callmeaf-otp.model_resource_collection');
         $this->defaultData = config('callmeaf-otp.default_values');
-        $this->defaultData['expired_at'] = now()->addSeconds(config('callmeaf-otp.lifetime'));
+        $this->defaultData['expired_at'] = now()->addSeconds($this->lifetime());
     }
 
     public function smsChannel(): SmsService
@@ -28,6 +30,9 @@ class OtpService extends BaseService implements OtpServiceInterface
 
     public function sendNewOtp(string $mobile): OtpService
     {
+        if($this->freshQuery()->where('mobile',$mobile)->where('expired_at','<',now()->addSeconds($this->lifetime()))->exists()) {
+            throw new WaitForNewOtpException();
+        }
         $code = $this->newCode();
         $this->updateOrCreate([
             'mobile' => $mobile
@@ -55,8 +60,30 @@ class OtpService extends BaseService implements OtpServiceInterface
         return $code;
     }
 
+    public function verifyCode(string $mobile, string $code): bool
+    {
+        $this->freshQuery()
+            ->where([
+                'mobile' => $mobile,
+                'code' => $code,
+            ])->where('expired_at','>',now()->addSeconds(config('callmeaf-otp.lifetime')))
+            ->first();
+
+        if(!$this->model) {
+            throw new OtpExpiredException();
+        }
+
+        $this->forceDelete();
+        return true;
+    }
+
     private function codeLength(): int
     {
-        return config('callmeaf-otp.code_length');
+        return config('callmeaf-otp.length');
+    }
+
+    private function lifetime(): int
+    {
+        return config('callmeaf-otp.lifetime');
     }
 }
