@@ -30,7 +30,7 @@ class OtpService extends BaseService implements OtpServiceInterface
 
     public function sendNewOtp(string $mobile): OtpService
     {
-        if($this->freshQuery()->where('mobile',$mobile)->where('expired_at','<',now()->addSeconds($this->lifetime()))->exists()) {
+        if($this->freshQuery()->where('mobile',$mobile)->where('expired_at','>',now())->exists()) {
             throw new WaitForNewOtpException();
         }
         $code = $this->newCode();
@@ -40,14 +40,14 @@ class OtpService extends BaseService implements OtpServiceInterface
             'mobile' => $mobile,
             'code' => $code,
         ]);
-        $smsChannel = $this->smsChannel();
-        $smsChannel->sendViaPattern(
-            pattern: $smsChannel->verifyOtpPattern(),
-            mobile: $mobile,
-            values: [
-                $code,
-            ],
-        );
+//        $smsChannel = $this->smsChannel();
+//        $smsChannel->sendViaPattern(
+//            pattern: $smsChannel->verifyOtpPattern(),
+//            mobile: $mobile,
+//            values: [
+//                $code,
+//            ],
+//        );
         return $this;
     }
 
@@ -66,9 +66,8 @@ class OtpService extends BaseService implements OtpServiceInterface
             ->where([
                 'mobile' => $mobile,
                 'code' => $code,
-            ])->where('expired_at','>',now()->addSeconds(config('callmeaf-otp.lifetime')))
+            ])->where('expired_at','>',now())
             ->first();
-
         if(!$this->model) {
             throw new OtpExpiredException();
         }

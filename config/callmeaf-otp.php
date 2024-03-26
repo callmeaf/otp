@@ -13,15 +13,19 @@ return [
     'sms_channel' => \Callmeaf\Kavenegar\Services\V1\KavenegarService::class,
     'length' => 5, // code length
     'lifetime' => 60, // seconds
-    'middlewares' => [
-        'send' => [
-            'throttle:1,2',
-        ],
-    ],
     'validations' => [
         'send' => [
             'mobile' => true,
         ],
     ],
-
+    'controllers' => [
+        'global' => \Callmeaf\Otp\Http\Controllers\V1\Api\OtpController::class,
+    ],
+    'middlewares' => [
+        'global' => [],
+        'send' => [
+            'guest:sanctum',
+            'throttle:1,2',
+        ],
+    ],
 ];
