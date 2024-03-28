@@ -39,6 +39,7 @@ class OtpService extends BaseService implements OtpServiceInterface
         ],[
             'mobile' => $mobile,
             'code' => $code,
+            'expired_at' => @$this->defaultData['expired_at'],
         ]);
 //        $smsChannel = $this->smsChannel();
 //        $smsChannel->sendViaPattern(

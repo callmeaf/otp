@@ -16,10 +16,12 @@ class OtpController extends ApiController
     public function send(OtpSendRequest $request)
     {
         try {
-            $this->otpService->sendNewOtp(mobile: $request->get('mobile'));
-             return apiResponse([
-                 //
-             ],__('callmeaf-base::v1.successful_sent'));
+            $data = [];
+            $otpService = $this->otpService->sendNewOtp(mobile: $request->get('mobile'));
+            if(!app()->isProduction() && config('callmeaf-otp.show_otp_in_develop_mode')) {
+                $data['otp'] = $otpService->getModel(asResource: true,attributes: config('callmeaf-otp.resources.send'));
+            }
+             return apiResponse($data,__('callmeaf-base::v1.successful_sent'));
         } catch (\Exception $exception) {
             report($exception);
             return apiResponse([],$exception);

@@ -13,9 +13,15 @@ return [
     'sms_channel' => \Callmeaf\Kavenegar\Services\V1\KavenegarService::class,
     'length' => 5, // code length
     'lifetime' => 60, // seconds
+    'show_otp_in_develop_mode' => true, // display otp model in api response only in develop mode
     'validations' => [
         'send' => [
             'mobile' => true,
+        ],
+    ],
+    'resources' => [
+        'send' => [
+            'code',
         ],
     ],
     'controllers' => [
