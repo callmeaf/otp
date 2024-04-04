@@ -3,15 +3,15 @@
 namespace Callmeaf\Otp\Http\Controllers\V1\Api;
 
 use Callmeaf\Base\Http\Controllers\V1\Api\ApiController;
-use Callmeaf\Kavenegar\Services\V1\KavenegarService;
 use Callmeaf\Otp\Http\Requests\V1\Api\OtpSendRequest;
 use Callmeaf\Otp\Services\V1\OtpService;
 
 class OtpController extends ApiController
 {
-    public function __construct(protected OtpService $otpService)
+    protected OtpService $otpService;
+    public function __construct()
     {
-
+        $this->otpService = app(config('callmeaf-otp.service'));
     }
     public function send(OtpSendRequest $request)
     {
