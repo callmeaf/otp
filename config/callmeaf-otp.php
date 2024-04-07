@@ -30,7 +30,7 @@ return [
         'global' => [],
         'send' => [
             'guest:sanctum',
-            'throttle:1,2',
+            'throttle:1,1',
         ],
     ],
 ];
