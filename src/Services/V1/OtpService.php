@@ -77,12 +77,12 @@ class OtpService extends BaseService implements OtpServiceInterface
         return true;
     }
 
-    private function codeLength(): int
+    protected function codeLength(): int
     {
         return config('callmeaf-otp.length');
     }
 
-    private function lifetime(): int
+    protected function lifetime(): int
     {
         return config('callmeaf-otp.lifetime');
     }
