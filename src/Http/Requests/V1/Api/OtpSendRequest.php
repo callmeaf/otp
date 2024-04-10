@@ -21,11 +21,9 @@ class OtpSendRequest extends FormRequest
      */
     public function rules(): array
     {
-        return collect([
+        return validationManager(rules: [
             'mobile' => ['string'],
-        ])->map(
-            fn($values,$key) => validationManager($key,$values,config("callmeaf-otp.validations.send")))
-            ->toArray();
+        ],filters: config("callmeaf-otp.validations.send"));
     }
 
 }
