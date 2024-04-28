@@ -11,7 +11,7 @@ class OtpSendRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return app(config('callmeaf-otp.form_request_authorizers.otp'))->send();
     }
 
     /**

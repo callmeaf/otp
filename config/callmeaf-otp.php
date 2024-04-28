@@ -26,6 +26,9 @@ return [
     'controllers' => [
         'global' => \Callmeaf\Otp\Http\Controllers\V1\Api\OtpController::class,
     ],
+    'form_request_authorizers' => [
+        'otp' => \Callmeaf\Otp\Utilities\V1\OtpFormRequestAuthorizer::class,
+    ],
     'middlewares' => [
         'global' => [],
         'send' => [
