@@ -1,6 +1,6 @@
 <?php
 
-namespace Callmeaf\Otp\Utilities\V1;
+namespace Callmeaf\Otp\Utilities\V1\Otp\Api;
 
 use Callmeaf\Base\Utilities\V1\FormRequestAuthorizer;
 

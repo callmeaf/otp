@@ -2,8 +2,8 @@
 
 use \Illuminate\Support\Facades\Route;
 
-Route::prefix(config('callmeaf-base.api.prefix_url'))->as(config('callmeaf-base.api.prefix_route_name'))->middleware(config('callmeaf-base.api.middlewares'))->group(function () {
-    Route::middleware(config('callmeaf-otp.middlewares.global'))->controller(config('callmeaf-otp.controllers.global'))->group(function () {
-        Route::post('/otp/send','send')->middleware(config('callmeaf-otp.middlewares.send'))->name('otp.send');
+Route::prefix(config('callmeaf-base.api.prefix_url'))->as(config('callmeaf-base.api.prefix_route_name'))->group(function () {
+    Route::controller(config('callmeaf-otp.controllers.otp'))->group(function () {
+        Route::post('/otp/send','send')->name('otp.send');
     });
 });

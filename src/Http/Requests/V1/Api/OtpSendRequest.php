@@ -23,7 +23,7 @@ class OtpSendRequest extends FormRequest
     {
         return validationManager(rules: [
             'mobile' => ['string'],
-        ],filters: config("callmeaf-otp.validations.send"));
+        ],filters: app(config("callmeaf-otp.validations.otp"))->send());
     }
 
 }
