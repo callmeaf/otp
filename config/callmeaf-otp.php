@@ -9,6 +9,9 @@ return [
         'status' => \Callmeaf\Otp\Enums\OtpStatus::ACTIVE,
         'type' => \Callmeaf\Otp\Enums\OtpType::SMS,
     ],
+    'events' => [
+
+    ],
     'sms_channel' => \Callmeaf\Farazsms\Services\V1\FarazsmsService::class,
     'length' => 5, // code length
     'lifetime' => 60, // seconds

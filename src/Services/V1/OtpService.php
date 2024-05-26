@@ -28,7 +28,7 @@ class OtpService extends BaseService implements OtpServiceInterface
         return app(config('callmeaf-otp.sms_channel'));
     }
 
-    public function sendNewOtp(string $mobile): OtpService
+    public function sendNewOtp(string $mobile,?array $events = []): OtpService
     {
         if($this->freshQuery()->where('mobile',$mobile)->where('expired_at','>',now())->exists()) {
             throw new WaitForNewOtpException();
@@ -49,6 +49,7 @@ class OtpService extends BaseService implements OtpServiceInterface
                 $code,
             ],
         );
+        $this->eventsCaller($events);
         return $this;
     }
 

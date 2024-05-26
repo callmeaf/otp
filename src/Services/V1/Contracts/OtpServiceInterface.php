@@ -9,7 +9,7 @@ use Callmeaf\Sms\Services\V1\SmsService;
 interface OtpServiceInterface extends BaseServiceInterface
 {
     public function smsChannel(): SmsService;
-    public function sendNewOtp(string $mobile): OtpService;
+    public function sendNewOtp(string $mobile,?array $events = []): OtpService;
     public function newCode(): string;
     public function verifyCode(string $mobile,string $code): bool;
 }
