@@ -20,9 +20,7 @@ return [
         'otp' => \Callmeaf\Otp\Utilities\V1\Otp\Api\OtpFormRequestValidator::class,
     ],
     'resources' => [
-        'send' => [
-            'code',
-        ],
+        'otp' => \Callmeaf\Otp\Utilities\V1\Otp\Api\OtpResources::class,
     ],
     'controllers' => [
         'otp' => \Callmeaf\Otp\Http\Controllers\V1\Api\OtpController::class,
