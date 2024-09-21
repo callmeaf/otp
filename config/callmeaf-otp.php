@@ -17,18 +17,18 @@ return [
     'lifetime' => 60, // seconds
     'show_otp_in_develop_mode' => true, // display otp model in api response only in develop mode
     'validations' => [
-        'otp' => \Callmeaf\Otp\Utilities\V1\Otp\Api\OtpFormRequestValidator::class,
+        'otp' => \Callmeaf\Otp\Utilities\V1\Api\Otp\OtpFormRequestValidator::class,
     ],
     'resources' => [
-        'otp' => \Callmeaf\Otp\Utilities\V1\Otp\Api\OtpResources::class,
+        'otp' => \Callmeaf\Otp\Utilities\V1\Api\Otp\OtpResources::class,
     ],
     'controllers' => [
         'otp' => \Callmeaf\Otp\Http\Controllers\V1\Api\OtpController::class,
     ],
     'form_request_authorizers' => [
-        'otp' => \Callmeaf\Otp\Utilities\V1\Otp\Api\OtpFormRequestAuthorizer::class,
+        'otp' => \Callmeaf\Otp\Utilities\V1\Api\Otp\OtpFormRequestAuthorizer::class,
     ],
     'middlewares' => [
-        'otp' => \Callmeaf\Otp\Utilities\V1\Otp\Api\OtpControllerMiddleware::class,
+        'otp' => \Callmeaf\Otp\Utilities\V1\Api\Otp\OtpControllerMiddleware::class,
     ],
 ];
