@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('otps', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('status')->nullable();
-            $table->tinyInteger('type')->nullable();
+            $table->string('status')->nullable();
+            $table->string('type')->nullable();
             $table->string('code')->unique()->nullable();
             $table->string('mobile')->unique()->nullable();
             $table->dateTime('expired_at')->nullable();
