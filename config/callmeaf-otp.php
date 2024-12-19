@@ -10,7 +10,9 @@ return [
         'type' => \Callmeaf\Otp\Enums\OtpType::SMS,
     ],
     'events' => [
-
+        \Callmeaf\Otp\Events\OtpSent::class => [
+            // listeners
+        ],
     ],
     'sms_channel' => \Callmeaf\Farazsms\Services\V1\FarazsmsService::class,
     'length' => 5, // code length

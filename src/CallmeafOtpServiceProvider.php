@@ -2,6 +2,7 @@
 
 namespace Callmeaf\Otp;
 
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
 class CallmeafOtpServiceProvider extends ServiceProvider
@@ -24,6 +25,8 @@ class CallmeafOtpServiceProvider extends ServiceProvider
         $this->registerMigration();
 
         $this->registerLang();
+
+        $this->registerEvents();
     }
 
     private function registerConfig()
@@ -58,5 +61,16 @@ class CallmeafOtpServiceProvider extends ServiceProvider
         $this->publishes([
             self::LANG_DIR => $langPathFromVendor,
         ],self::LANG_GROUP);
+    }
+
+    private function registerEvents(): void
+    {
+        foreach (config('callmeaf-otp.events') as $event => $listeners) {
+            Event::listen($event,function($event) use ($listeners) {
+                foreach($listeners as $listener) {
+                    app($listener)->handle($event);
+                }
+            });
+        }
     }
 }
