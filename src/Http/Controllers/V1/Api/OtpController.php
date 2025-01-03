@@ -14,9 +14,14 @@ class OtpController extends ApiController
     protected OtpResources $otpResources;
     public function __construct()
     {
-        app(config('callmeaf-otp.middlewares.otp'))($this);
         $this->otpService = app(config('callmeaf-otp.service'));
     }
+
+    public static function middleware(): array
+    {
+        return app(config('callmeaf-otp.middlewares.otp'))();
+    }
+
     public function send(OtpSendRequest $request)
     {
         try {
