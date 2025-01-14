@@ -31,7 +31,7 @@ class OtpController extends ApiController
                 OtpSent::class,
             ]);
             if(!app()->isProduction() && config('callmeaf-otp.show_otp_in_develop_mode')) {
-                $data['otp'] = $otpService->getModel(asResource: true,attributes: $resources->attributes());
+                $data['otp'] = $otpService->getModel(asResource: true,attributes: $resources->attributes(),relations: $resources->relations());
             }
              return apiResponse($data,__('callmeaf-base::v1.successful_sent'));
         } catch (\Exception $exception) {
