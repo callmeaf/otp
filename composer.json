@@ -1,0 +1,26 @@
+{
+    "name": "callmeaf/otp",
+    "description": "Manage Otp",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Callmeaf\\Otp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "callmeaf",
+            "email": "alikhoshkar2000@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Callmeaf\\Otp\\CallmeafOtpServiceProvider"
+            ]
+        }
+    }
+}
