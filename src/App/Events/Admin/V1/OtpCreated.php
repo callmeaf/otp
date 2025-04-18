@@ -19,9 +19,7 @@ class OtpCreated
      */
     public function __construct(public Otp $otp)
     {
-        if ($otp->identifierIsEmail()) {
-            Mail::to($this->otp->identifier)->queue(new OtpCodeMail($otp));
-        }
+        //
     }
 
     /**
