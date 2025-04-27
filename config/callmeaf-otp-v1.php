@@ -126,7 +126,9 @@ return [
         RequestType::ADMIN->value => [
             'prefix' => 'otps',
             'as' => 'otps.',
-            'middleware' => [],
+            'middleware' => [
+                'auth:sanctum',
+            ],
         ],
     ],
 ];

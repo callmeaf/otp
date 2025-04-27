@@ -2,6 +2,8 @@
 
 namespace Callmeaf\Otp\App\Http\Requests\Admin\V1;
 
+use Callmeaf\Otp\App\Repo\Contracts\OtpRepoInterface;
+use Callmeaf\Permission\App\Enums\PermissionCycle;
 use Illuminate\Foundation\Http\FormRequest;
 
 class OtpIndexRequest extends FormRequest
@@ -11,7 +13,7 @@ class OtpIndexRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return \Perm::userCan(PermissionCycle::INDEX,OtpRepoInterface::class);
     }
 
     /**
