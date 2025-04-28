@@ -19,12 +19,14 @@ class OtpResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'code' => $this->code,
             'identifier' => $this->identifier,
             'expired_at' => $this->expired_at,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
+            $this->mergeWhen(app()->isLocal(), [
+                'code' => $this->code,
+            ]),
         ];
     }
 }
