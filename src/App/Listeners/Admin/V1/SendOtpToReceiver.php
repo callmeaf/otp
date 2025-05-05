@@ -26,7 +26,7 @@ class SendOtpToReceiver implements ShouldQueue
         if($otp->identifierIsEmail()) {
             $identifier = $otp->identifier;
 
-            Mail::to($identifier)->queue(new OtpCodeMail($otp));
+            Mail::to($identifier)->send(new OtpCodeMail($otp));
         }
     }
 
