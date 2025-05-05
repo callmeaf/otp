@@ -46,7 +46,7 @@ return [
                 // listeners
             ],
             \Callmeaf\Otp\App\Events\Web\V1\OtpCreated::class => [
-                \Callmeaf\Otp\App\Listeners\Web\V1\SendOtpToReceiver::class,
+//                \Callmeaf\Otp\App\Listeners\Web\V1\SendOtpToReceiver::class,
                 // listeners
             ],
             \Callmeaf\Otp\App\Events\Web\V1\OtpShowed::class => [

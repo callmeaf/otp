@@ -29,4 +29,12 @@ class SendOtpToReceiver implements ShouldQueue
             Mail::to($identifier)->queue(new OtpCodeMail($otp));
         }
     }
+
+    /**
+     * Get the name of the listener's queue.
+     */
+    public function viaQueue(): string
+    {
+        return 'otps';
+    }
 }
