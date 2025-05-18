@@ -18,6 +18,14 @@ class SendOtpToReceiver implements ShouldQueue
     }
 
     /**
+     * Get the name of the listener's queue.
+     */
+    public function viaQueue(): string
+    {
+        return 'otps';
+    }
+
+    /**
      * Handle the event.
      */
     public function handle(OtpCreated $event): void
@@ -28,13 +36,5 @@ class SendOtpToReceiver implements ShouldQueue
 
             Mail::to($identifier)->send(new OtpCodeMail($otp));
         }
-    }
-
-    /**
-     * Get the name of the listener's queue.
-     */
-    public function viaQueue(): string
-    {
-        return 'otps';
     }
 }

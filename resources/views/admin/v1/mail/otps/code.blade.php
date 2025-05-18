@@ -3,9 +3,7 @@
 
 {{__('callmeaf-otp::admin_v1.mail.otp_code.body')}}
 
-@component('mail::panel')
-    ## {{ $code }}
-@endcomponent
+## {{ $code }}
 
 {{__('callmeaf-otp::admin_v1.mail.otp_code.footer',['x' => $codeLifetime])}}
 
