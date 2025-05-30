@@ -9,4 +9,4 @@ use Illuminate\Support\Facades\Route;
     $middleware,
 ] = Base::getRouteConfigFromRepo(repo: \Callmeaf\Otp\App\Repo\Contracts\OtpRepoInterface::class);
 
-Route::apiResource($prefix, $controllers['otp'])->middleware($middleware);
+Route::apiResource($prefix, $controllers['otp'])->only(['store'])->middleware($middleware);
