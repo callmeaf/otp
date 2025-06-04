@@ -121,14 +121,15 @@ return [
         RequestType::WEB->value => [
             'prefix' => 'otps',
             'as' => 'otps.',
-            'middleware' => [],
+            'middleware' => [
+                'route_status:' . \Symfony\Component\HttpFoundation\Response::HTTP_NOT_FOUND
+            ],
         ],
         RequestType::ADMIN->value => [
             'prefix' => 'otps',
             'as' => 'otps.',
             'middleware' => [
-                'auth:sanctum',
-                'role:' . \Callmeaf\Role\App\Enums\RoleName::SUPER_ADMIN->value
+
             ],
         ],
     ],

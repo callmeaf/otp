@@ -4,6 +4,7 @@ namespace Callmeaf\Otp\App\Http\Controllers\Admin\V1;
 
 use Callmeaf\Base\App\Http\Controllers\Admin\V1\AdminController;
 use Callmeaf\Otp\App\Repo\Contracts\OtpRepoInterface;
+use Callmeaf\Role\App\Enums\RoleName;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
@@ -17,7 +18,8 @@ class OtpController extends AdminController implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware(middleware: 'custom_throttle:1,' . app(OtpRepoInterface::class)->config['code_lifetime'], only: ['store'])
+            new Middleware(middleware: 'custom_throttle:1,' . app(OtpRepoInterface::class)->config['code_lifetime'], only: ['store']),
+            new Middleware(middleware: ['auth:sanctum','role:' . RoleName::SUPER_ADMIN->value],except: ['store']),
         ];
     }
 
